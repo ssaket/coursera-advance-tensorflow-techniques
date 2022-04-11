@@ -1,4 +1,4 @@
-,image_file,fixation_file,image_size,center_index,is_salient
+,image_file,fixation_file,image_size,center_index,output
 0,data/toronto/fixdens/images/1.jpg,data/toronto/fixdens/output/d1.jpg,"(681, 511)","[376, 367]",1
 1,data/toronto/fixdens/images/1.jpg,data/toronto/fixdens/output/d1.jpg,"(681, 511)","[380, 351]",1
 2,data/toronto/fixdens/images/1.jpg,data/toronto/fixdens/output/d1.jpg,"(681, 511)","[375, 349]",1

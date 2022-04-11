@@ -1,7 +1,7 @@
-from matplotlib import pyplot as plt
 import os
 import re
 import glob
+import tensorflow as tf
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
 import numpy as np
@@ -29,17 +29,17 @@ def create_training_dataframe(files):
             #     cv2.copyMakeBorder(img_arr, abs(left), abs(top), 0, 0, cv2.BORDER_REFLECT)
             # cropped_img = img.crop((left, top, right, bottom))
             # plt.imshow(array_to_img(cropped_img))
-            df_list.append((imgf, fixf, img.size, idx.tolist(), 1))
+            df_list.append((imgf, fixf, img.size, idx.tolist(), 'salient'))
         for idx in sample_dark_idx:
-            df_list.append((imgf, fixf, img.size, idx.tolist(), 0))
+            df_list.append((imgf, fixf, img.size, idx.tolist(), 'non_salient'))
             
     df = pd.DataFrame(df_list, columns =['image_file', 'fixation_file', 'image_size' ,'center_index', 'is_salient'])
-    df.to_csv('torronto_df.csv')
+    df.to_csv('torronto_df_.csv')
 
 
 
 if __name__ == '__main__':
-    TORRONRO_ROOT = 'data/toronto/fixdens/'
+    TORRONRO_ROOT = os.path.join('test', 'data', 'toronto', 'fixdens')
     TORRONTO_IMAGES_DIR = 'images'
     TORRONTO_SAL_DIR = 'output'
 
