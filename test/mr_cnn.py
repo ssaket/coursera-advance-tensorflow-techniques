@@ -15,14 +15,14 @@ class StreamBlock(Model):
         self.flatten = Flatten()
         self.dense = Dense(512, activation='relu')
 
-    def call(self, input_tensor):
-        x = self.conv1(input_tensor)
+    def call(self, input):
+        x = self.conv1(input)
         x = self.pool1(x)
         x = self.conv2(x)
         x = self.pool2(x)
         x = self.conv3(x)
         x = self.pool3(x)
-        # x = self.flatten(x)
+        x = self.flatten(x)
         x = self.dense(x)
         return x
         
@@ -30,9 +30,6 @@ class MrCNN(Model):
 
     def __init__(self):
         super(MrCNN, self).__init__()
-        # self.resize_1 = Resizing(400, 400)
-        # self.resize_2 = Resizing(250, 250)
-        # self.resize_3 = Resizing(150, 150)
         self.stream_1 = StreamBlock()
         self.stream_2 = StreamBlock()
         self.stream_3 = StreamBlock()
@@ -41,9 +38,9 @@ class MrCNN(Model):
         self.classifier = Dense(1, activation='sigmoid')
 
     def call(self, input_tensor):
-        input_1 = input_tensor[0]
-        input_2 = input_tensor[1]
-        input_3 = input_tensor[2]
+        input_1 = input_tensor[:,0,:]
+        input_2 = input_tensor[:,1,:]
+        input_3 = input_tensor[:,2,:]
     
         s1 = self.stream_1(input_1)
         s2 = self.stream_2(input_2)
@@ -52,5 +49,4 @@ class MrCNN(Model):
         x = self.add([s1, s2, s3])
         x = self.dense(x)
         output = self.classifier(x)
-        print(output.shape)
         return output
